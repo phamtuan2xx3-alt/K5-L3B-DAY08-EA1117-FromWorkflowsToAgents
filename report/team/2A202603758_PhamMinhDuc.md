@@ -1,11 +1,11 @@
-# Báo cáo cá nhân — 2A202603758_PhamMinhDuc
+﻿# Báo cáo cá nhân — 2A202603758_PhamMinhDuc
 
 ## 1. Thông tin thành viên
 
 - Họ tên: Phạm Minh Đức
 - MSSV: 2A202603758
 - Email: minhpham141098@gmail.com
-- GitHub: ducpham13
+- GitHub: https://github.com/ducpham13
 
 ## 2. Phần việc phụ trách
 
@@ -37,3 +37,4 @@ Dùng Claude Code (claude-sonnet-4-6) để đọc các file tham chiếu (`swar
 ## 6. Tự đánh giá
 
 Đã hoàn thành Shape A workflow với logic đúng theo business rules. Các must-pass đã được xem xét kỹ: approval do host kiểm (không tự quyết), không lộ secret/PII trong trace, crash không tạo thêm refund vì `InjectedCrash` không bị bắt. Chưa chạy được test suite do môi trường thiếu dependency (`pyyaml`), cần setup venv đầy đủ để xác nhận xanh.
+

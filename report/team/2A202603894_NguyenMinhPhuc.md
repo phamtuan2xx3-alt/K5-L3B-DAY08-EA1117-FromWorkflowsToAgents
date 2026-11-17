@@ -1,11 +1,11 @@
-# Báo cáo cá nhân — 2A202603894_NguyenMinhPhuc
+﻿# Báo cáo cá nhân — 2A202603894_NguyenMinhPhuc
 
 ## 1. Thông tin thành viên
 
 - Họ tên: Nguyễn Minh Phúc
 - MSSV: 2A202603894
 - Email: nminhphuc.nmp0512@gmail.com
-- GitHub: NgMinPhuc
+- GitHub: https://github.com/NgMinPhuc
 
 ## 2. Phần việc phụ trách
 
@@ -61,3 +61,4 @@ Shape C `orchestrator` (orchestrator + investigator chỉ đọc), file `src/lab
 - **Đã làm được:** shape C qua toàn bộ test public và không lộ secret trong trace. Crash rồi resume vẫn chỉ ra một refund.
 - **Đánh đổi:** orchestrator tốn hơn swarm khoảng 14% chi phí cho mỗi lần thành công và đi gần gấp đôi số bước, đổi lại ổn định trên cả 5 seed.
 - **Giới hạn:** số liệu đo bằng MockLLM nên chưa phản ánh độ dao động của model thật. Kết quả trên bộ hidden 40 claim do giảng viên chấm.
+
