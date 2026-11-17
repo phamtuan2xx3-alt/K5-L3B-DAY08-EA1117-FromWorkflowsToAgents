@@ -1,7 +1,7 @@
 ﻿# Decision record
 
 - Shape chọn: workflow
-- Commit hash: 4fb6607
+- Commit hash: 0731dfe
 - Run id dẫn chứng: benchmark.json (workflow, seeds 11/22/33/44/55)
 - Pass rate / pass^5 / seed min-max / variance: 1.000 / 1.000 / 1.000–1.000 / 0.000000
 - Cost per success (mô phỏng, VND): 27.86
@@ -23,4 +23,5 @@ Trace ghi các quyết định, quote, trạng thái host và crash event cần 
 ## Giới hạn
 
 MockLLM không phải model sản xuất. Latency là `unavailable`; cost là số mô phỏng. Benchmark public không thay thế hidden grading.
+
 
