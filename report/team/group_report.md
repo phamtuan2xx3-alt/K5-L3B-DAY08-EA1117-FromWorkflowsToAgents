@@ -5,7 +5,7 @@
 - Tên nhóm: EA1117
 - Lớp: L3B
 - Thành viên: xem `TEAM.md`
-- Commit chốt: 5cdc9e5
+- Commit chốt: 4fb6607
 
 ## 2. Mục tiêu và cách tiếp cận
 
@@ -48,3 +48,4 @@ MockLLM không phải model sản xuất và latency là `unavailable`. Benchmar
 - `README.md`, `RUBRIC.md`, `CHECKPOINTS.md`
 - `docs/business_rules.md`, `docs/contracts.md`, `docs/architecture.md`, `docs/metrics.md`
 - `report/team/decision_adr.md`, `report/team/research_card.md`
+
