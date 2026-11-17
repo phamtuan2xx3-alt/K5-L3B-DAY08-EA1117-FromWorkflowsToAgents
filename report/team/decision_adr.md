@@ -1,30 +1,25 @@
-# Decision record
+﻿# Decision record
 
-Điền sau dấu `:` trên cùng dòng, không xóa nhãn. Giảng viên và `python -m lab8.check_submission` (chạy trong `src/`) đọc các dòng này bằng máy. Không đổi tên hay dời file này khỏi `report/team/`.
-`Shape chọn` phải là đúng một trong: `workflow`, `single`, `orchestrator`, `swarm`. Đây là shape được chấm cổng hidden.
-
-- Shape chọn:
-- Commit hash:
-- Run id dẫn chứng:
-- Pass rate / pass^5 / seed min-max / variance:
-- Cost per success (mô phỏng, VND):
-- Crash safety:
-- Secret leak / approval bypass:
-
-Ví dụ một dòng đã điền: `- Shape chọn: workflow`, `- Crash safety: 20/20 (src/reports/crash.json)`.
+- Shape chọn: workflow
+- Commit hash: b263f95
+- Run id dẫn chứng: benchmark.json (workflow, seeds 11/22/33/44/55)
+- Pass rate / pass^5 / seed min-max / variance: 1.000 / 1.000 / 1.000–1.000 / 0.000000
+- Cost per success (mô phỏng, VND): 27.86
+- Crash safety: 20/20 (src/reports/crash.json)
+- Secret leak / approval bypass: 0 leak, 0 bypass
 
 ## Vì sao shape này
 
-Viết 1 đoạn. So cùng corpus và cùng seed, không so với một lần chạy lẻ.
+Workflow đạt pass rate và pass^5 tuyệt đối trên cùng corpus và năm seed, đồng thời có cost/success thấp nhất trong benchmark. Đây là lựa chọn phù hợp khi ưu tiên tính ổn định, khả năng kiểm soát và chi phí.
 
 ## Có đáng đổi lấy multi-agent không
 
-Nếu pass nhỉnh hơn mà cost và variance cao hơn, nhóm giữ hay đổi? Điều kiện nào làm quyết định đảo lại?
+Không đổi shape được chọn trong setup này. Single cũng đạt 100% nhưng workflow có chi phí thấp hơn; orchestrator và swarm có chi phí cao hơn, còn swarm có một lỗi seed 55 và variance khác 0. Chỉ đổi khi task cần phân tích song song và lợi ích chất lượng vượt chi phí.
 
 ## Trace và bằng chứng
 
-Trace của nhóm ghi những event nào? Field nào cố ý **không** ghi, và vì sao? Nếu trace nằm ngoài chỗ scanner quét được, đội security chứng minh thế nào là hệ thống không lộ secret?
+Trace ghi các quyết định, quote, trạng thái host và crash event cần thiết. Nhóm không ghi parent secret, raw headers, số điện thoại, địa chỉ, internal note hoặc tên hàng để giữ ranh giới bảo mật.
 
 ## Giới hạn
 
-MockLLM không phải model sản xuất. Latency để `unavailable`. Không sửa JSON cho đủ 0.75.
+MockLLM không phải model sản xuất. Latency là `unavailable`; cost là số mô phỏng. Benchmark public không thay thế hidden grading.
