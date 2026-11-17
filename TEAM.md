@@ -2,7 +2,7 @@
 
 ## Thông tin nhóm
 
-- Tên nhóm: LogiX-VN Agents
+- Tên nhóm: EA1117
 - Lớp: L3A
 - Repo nhóm: `K5-L3A-DAY08-TenNhom-FromWorkflowsToAgents`
 - Nhánh nộp: `main`
@@ -35,3 +35,4 @@
 - `report/team/2A202603848_ChuVanNhat.md`: Shape D và evaluation.
 - `report/team/2A202603894_NguyenMinhPhuc.md`: Shape C.
 - `report/team/2A202603896_PhamQuangDung.md`: handoff boundary, security tests và báo cáo.
+
