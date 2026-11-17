@@ -12,7 +12,7 @@
 
 | STT | Họ tên | MSSV | Email/GitHub | Vai trò |
 | --: | ------ | ----- | ------------ | ------- |
-| 1 | Phạm Quang Tuấn | 2A202603824 | phamquangtuan | Leader, integration, Shape B single |
+| 1 | Phạm Quang Tuấn | 2A202603824 | phamtuan2xx3@gmail.com / https://github.com/phamtuan2xx3-alt | Leader, integration, Shape B single |
 | 2 | Phạm Minh Đức | 2A202603758 | 2A202603758_PhamMinhDuc | Shape A workflow |
 | 3 | Chu Văn Nhật | 2A202603848 | chunhat | Shape D swarm, evaluation |
 | 4 | Nguyễn Minh Phúc | 2A202603894 | feat/NgMinPhuc | Shape C orchestrator |
@@ -35,6 +35,7 @@
 - `report/team/2A202603848_ChuVanNhat.md`: Shape D và evaluation.
 - `report/team/2A202603894_NguyenMinhPhuc.md`: Shape C.
 - `report/team/2A202603896_PhamQuangDung.md`: handoff boundary, security tests và báo cáo.
+
 
 
 

@@ -4,8 +4,8 @@
 
 - Họ tên: Phạm Quang Tuấn
 - MSSV: 2A202603824
-- Email: Chưa cập nhật
-- GitHub: Chưa cập nhật
+- Email: phamtuan2xx3@gmail.com
+- GitHub: https://github.com/phamtuan2xx3-alt
 
 ## 2. Phần việc phụ trách
 
@@ -33,3 +33,4 @@
 ## 6. Tự đánh giá
 
 Đã hoàn thành phần chuẩn bị môi trường và xác minh bộ test nền tảng. Các phần shape và báo cáo nhóm sẽ được tiếp tục hoàn thiện theo phân công.
+
