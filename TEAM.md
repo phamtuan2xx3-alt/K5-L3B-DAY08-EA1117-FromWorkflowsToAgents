@@ -6,7 +6,7 @@
 - Lớp: L3B
 - Repo nhóm: `K5-L3B-DAY08-EA1117-FromWorkflowsToAgents`
 - Nhánh nộp: `main`
-- Commit chốt: 7d60bf0
+- Commit chốt: 5cdc9e5
 
 ## Thành viên
 
@@ -35,6 +35,7 @@
 - `report/team/2A202603848_ChuVanNhat.md`: Shape D và evaluation.
 - `report/team/2A202603894_NguyenMinhPhuc.md`: Shape C.
 - `report/team/2A202603896_PhamQuangDung.md`: handoff boundary, security tests và báo cáo.
+
 
 
 
