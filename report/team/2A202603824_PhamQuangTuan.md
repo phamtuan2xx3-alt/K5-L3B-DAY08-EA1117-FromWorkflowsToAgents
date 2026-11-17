@@ -1,4 +1,4 @@
-﻿# Báo cáo cá nhân — Phạm Quang Tuấn
+﻿# Báo cáo cá nhân — 2A202603824_PhamQuangTuan
 
 ## 1. Thông tin thành viên
 
@@ -33,4 +33,5 @@
 ## 6. Tự đánh giá
 
 Đã hoàn thành phần chuẩn bị môi trường và xác minh bộ test nền tảng. Các phần shape và báo cáo nhóm sẽ được tiếp tục hoàn thiện theo phân công.
+
 
