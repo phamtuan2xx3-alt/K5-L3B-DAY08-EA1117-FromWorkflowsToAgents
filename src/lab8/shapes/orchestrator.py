@@ -19,7 +19,6 @@ ones. `lab8.trace.Trace` does this; your own tracer is fine if it matches.
 from __future__ import annotations
 
 import sqlite3
-from typing import Any
 
 from lab8.db import connect
 from lab8.durability import InjectedCrash, issue_refund
@@ -28,16 +27,18 @@ from lab8.mock_llm import complete
 from lab8.runtime import run_readonly_investigators
 from lab8.schemas import Budget, RunResult, make_run_id
 from lab8.shapes.common import finish, safe_dump
-from lab8.tools import compute_compensation, get_claim_view, tool_cost
+from lab8.tools import get_claim_view, tool_cost
 from lab8.trace import Trace
 
 SHAPE = "orchestrator"
 
-# Read-only tools handed to the investigator. No write tool ever crosses the handoff.
+# Read-only tools the investigator may use. No write tool can be listed here:
+# make_handoff rejects anything outside READONLY_TOOLS. lookup_refund_history is
+# left out on purpose: the host already subtracts earlier refunds, so the result
+# would cost a tool call without changing any decision.
 INVESTIGATOR_TOOLS = [
     "lookup_order",
     "lookup_policy",
-    "lookup_refund_history",
     "compute_compensation",
 ]
 
@@ -74,84 +75,68 @@ def _run(conn: sqlite3.Connection, claim_id: str, *, seed: int, crash_at: str | 
             error_reason=reason,
         )
 
+    # Parent context. Only the orchestrator sees it; it never enters the trace or the handoff.
+    claim = get_claim_view(conn, claim_id)
+    budget.add_tool(tool_cost())
+    if not claim.get("found"):
+        return done("failed", 0, "unknown_claim")
+    trace.add("claim", {"claim_id": claim_id, "has_order_id": bool(claim.get("order_id"))})
+
+    # Order id comes from the claim column only, never from the ticket text.
+    if not claim.get("order_id"):
+        return done("needs_info", 0, "missing_order_id")
+
+    # Allowlisted handoff: no ticket, no principal, no claim row. facts stays empty
+    # because the investigator reads the order itself through scoped tools.
+    handoff = make_handoff(
+        request_id=f"REQ-{claim_id}",
+        claim_id=claim_id,
+        task="investigate_refund_entitlement",
+        facts={},
+        allowed_tools=INVESTIGATOR_TOOLS,
+    )
+    trace.add("handoff", safe_dump(handoff))
+
+    investigated = run_readonly_investigators(conn, budget, handoff, principal_id=claim["principal_id"])
+    tools = investigated["tools"]
+
+    order_view = tools.get("lookup_order") or {}
+    if not order_view.get("visible"):
+        # Only the reason goes to the trace. lookup_order already strips phone/address/item/note.
+        trace.add("investigator", {"order_visible": False, "reason": order_view.get("reason")})
+        return done("escalated", 0, order_view.get("reason") or "order_not_visible")
+
+    quote_payload = tools.get("compute_compensation") or {}
+    trace.add(
+        "investigator",
+        {
+            "order_visible": True,
+            "order": safe_dump(order_view["order"]),
+            "policy_count": len((tools.get("lookup_policy") or {}).get("policies") or []),
+        },
+    )
+
+    # Money is decided by code (compute_compensation), not by the model.
+    proposal = int(quote_payload.get("amount_vnd") or 0)
+    trace.add("quote", safe_dump(quote_payload))
+
+    # Model only drafts the customer reply. The prompt carries no ticket text and no PII.
+    complete(budget, seed=seed, purpose="draft", prompt=f"claim={claim_id} proposal={proposal}")
+
+    if proposal <= 0:
+        return done("denied", 0, quote_payload.get("reason") or "no_entitlement")
+
+    # Full quote goes to the host. The host checks approval, the per-order cap and
+    # idempotency, and subtracts earlier refunds itself (T13, T14).
     try:
-        # 1. Orchestrator reads the claim through the allowlisted view (never SELECT *).
-        budget.add_tool(tool_cost())
-        claim = get_claim_view(conn, claim_id)
-        if not claim.get("found"):
-            return done("failed", 0, "unknown_claim")
-        trace.add("claim_view", {"claim_id": claim_id, "has_order_id": bool(claim.get("order_id"))})
-
-        # 2. No order_id -> ask for it. Never mine an order id out of the ticket text.
-        if not claim.get("order_id"):
-            complete(budget, seed=seed, purpose="draft", prompt="needs_info")
-            return done("needs_info", 0, "missing_order_id")
-
-        # 3. Sanitized handoff: allowlisted fields, empty facts, read-only tools only.
-        handoff = make_handoff(
-            request_id=f"REQ-{claim_id}",
-            claim_id=claim_id,
-            task="investigate_refund_eligibility",
-            facts={},
-            allowed_tools=list(INVESTIGATOR_TOOLS),
-        )
-        trace.add("handoff", safe_dump(handoff))
-
-        investigated = run_readonly_investigators(
-            conn, budget, handoff, principal_id=claim["principal_id"]
-        )
-        tools: dict[str, Any] = investigated["tools"]
-        order_view = tools.get("lookup_order") or {}
-        history = tools.get("lookup_refund_history") or {}
-        trace.add(
-            "investigator",
-            {
-                "order_visible": bool(order_view.get("visible")),
-                "order_reason": order_view.get("reason"),
-                "order": order_view.get("order"),  # allowlisted ORDER_FIELDS only
-                "refunded_vnd": history.get("refunded_vnd"),
-                "policy_count": len((tools.get("lookup_policy") or {}).get("policies") or []),
-            },
-        )
-
-        # 4. Not found / not owned -> escalate. No order details leave the host.
-        if not order_view.get("visible"):
-            complete(budget, seed=seed, purpose="draft", prompt="escalated")
-            return done("escalated", 0, order_view.get("reason") or "order_not_visible")
-
-        # 5. Quote comes from code, from the DB order row. Ticket numbers are ignored.
-        quote_payload = tools.get("compute_compensation")
-        if not quote_payload:
-            budget.add_tool(tool_cost())
-            quote_payload = compute_compensation(conn, dict(order_view["order"]))
-        proposal = int(quote_payload["amount_vnd"])
-        trace.add(
-            "quote",
-            {
-                "amount_vnd": proposal,
-                "reason": quote_payload.get("reason"),
-                "clause_ids": list(quote_payload.get("clause_ids") or []),
-            },
-        )
-        complete(budget, seed=seed, purpose="draft", prompt=f"proposal={proposal}")
-
-        if proposal <= 0:
-            return done("denied", 0, quote_payload.get("reason") or "no_entitlement")
-
-        # 6. Orchestrator (not the investigator) calls the host with the FULL quote.
-        try:
-            outcome = issue_refund(conn, claim_id, proposal, crash_at=crash_at)
-        except InjectedCrash:
-            trace.add("crash", {"at": crash_at})
-            trace.write()
-            raise
-        trace.add("host", {"ok": bool(outcome["ok"]), "reason": outcome["reason"]})
-
-        if not outcome["ok"]:
-            status = "failed" if outcome.get("conflict") else "denied"
-            return done(status, proposal, outcome["reason"])
-        return done("resolved", proposal, None)
+        outcome = issue_refund(conn, claim_id, proposal, crash_at=crash_at)
     except InjectedCrash:
+        trace.add("crash", {"at": crash_at})
+        trace.write()
         raise
-    except Exception as exc:  # run_claim must not raise; keep the message out (may echo data).
-        return done("failed", 0, f"exception:{type(exc).__name__}")
+    trace.add("host", {"ok": outcome["ok"], "reason": outcome["reason"], "conflict": outcome["conflict"]})
+
+    if not outcome["ok"]:
+        status = "failed" if outcome["conflict"] else "denied"
+        return done(status, proposal, outcome["reason"])
+    return done("resolved", proposal, None)
