@@ -34,7 +34,7 @@
 - `report/team/2A202603758_PhamMinhDuc.md`: Shape A.
 - `report/team/2A202603848_ChuVanNhat.md`: Shape D và evaluation.
 - `report/team/2A202603894_NguyenMinhPhuc.md`: Shape C.
-- `report/team/2A202603896_PhamQuangDung.md`: handoff boundary, security tests và báo cáo.
+- `report/team/2A202603896_PhamQuangDung.md`: Shape C, handoff boundary, security tests và báo cáo.
 
 
 
