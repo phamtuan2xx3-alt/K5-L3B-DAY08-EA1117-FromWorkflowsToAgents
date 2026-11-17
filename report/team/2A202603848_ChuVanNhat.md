@@ -1,4 +1,4 @@
-﻿# Báo cáo cá nhân — Chu Văn Nhật
+﻿# Báo cáo cá nhân — 2A202603848_ChuVanNhat
 
 ## 1. Thông tin thành viên
 
@@ -31,3 +31,4 @@ Dùng công cụ AI để hỗ trợ đọc tài liệu, thiết kế test và k
 ## 6. Tự đánh giá
 
 Đã hoàn thành phần baseline swarm, evaluation và các minh chứng kiểm thử an toàn cho nhóm.
+
