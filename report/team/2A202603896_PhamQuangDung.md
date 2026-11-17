@@ -64,4 +64,4 @@ Số chính thức và run id lấy từ `src/reports/benchmark.json` của nhó
 
 ## 6. Tự đánh giá
 
-...
+Đọc contract, business rules với test trước khi code, lại tận dụng được hạ tầng sẵn có nên shape C chạy phát ăn ngay, ít lỗi vặt. Cũng có viết thêm test ranh giới bảo mật để chắc chắn không dính lỗi của swarm, rồi đo benchmark để tối ưu chi phí thay vì cứ thấy test xanh là dừng. Dù vậy vẫn còn vài điểm hớ như gọi thừa một tool vô ích, chưa chạy thử trên tập hidden để kiểm chứng độ chịu tải, test ranh giới mới quét có một seed, và suýt lấy đại tên git user làm nhánh mà không hỏi lại. Làm xong mới thấm ở lab này an toàn nằm ở việc không làm bậy (không đẩy ticket vào handoff, không ghi bừa vào trace hay tự trừ tiền hoàn), còn nhồi nhiều agent chưa chắc đã hay bằng một luồng gọn gàng, ổn định và rẻ hơn. Lần sau sẽ viết test ranh giới trước khi dựng shape, và luôn tự hỏi bỏ đi có đổi quyết định không trước khi gọi thêm bất kỳ tool hay model nào.
