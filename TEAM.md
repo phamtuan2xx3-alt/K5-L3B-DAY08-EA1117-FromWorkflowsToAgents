@@ -6,7 +6,7 @@
 - Lớp: L3B
 - Repo nhóm: `K5-L3B-DAY08-EA1117-FromWorkflowsToAgents`
 - Nhánh nộp: `main`
-- Commit chốt: 5cdc9e5
+- Commit chốt: 77caffe
 
 ## Thành viên
 
