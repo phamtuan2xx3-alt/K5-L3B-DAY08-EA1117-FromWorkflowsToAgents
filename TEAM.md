@@ -11,7 +11,7 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-|   1 |        |      |       |        |         |
+|   1 | Chu Văn Nhật | 2A202603848 | moyymochi11@gmail.com | chunhat | Shape D & Evaluation Lead |
 |   2 |        |      |       |        |         |
 
 Gợi ý chia vai:
@@ -25,7 +25,7 @@ Gợi ý chia vai:
 
 | Người | Vai | Commit | Test đã thêm hoặc sửa |
 | --- | --- | --- | --- |
-| | | | |
+| Chu Văn Nhật | Shape D & Evaluation Lead | d73b2c3 | tests/test_swarm_chunhat.py::test_swarm_seed_variance_across_all_public_seeds |
 
 ## Cá nhân
 
@@ -39,16 +39,16 @@ Ví dụ: `report/team/20241234_NguyenVanAn.md`.
 
 Sao chép mục dưới đây cho từng thành viên.
 
-## MSSV_HoTen
+## 2A202603848_ChuVanNhat
 
 ### Phần việc phụ trách
 
--
+- Phụ trách đối chứng Shape D (Swarm), kiểm thử độ an toàn (Crash test 20/20) và đo lường baseline benchmark.
 
 ### Đóng góp cụ thể
 
--
+- Commit d73b2c3: Bộ test `src/tests/test_swarm_chunhat.py` với 4 test case chuyên sâu cho Swarm, chạy crash suite 20/20 và benchmark baseline.
 
 ### Bằng chứng
 
--
+- File test `src/tests/test_swarm_chunhat.py`, báo cáo cá nhân `report/team/2A202603848_ChuVanNhat.md`, các file `reports/crash.json` và `reports/benchmark_swarm.json`.
