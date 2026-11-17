@@ -3,8 +3,8 @@
 ## Thông tin nhóm
 
 - Tên nhóm: EA1117
-- Lớp: L3A
-- Repo nhóm: `K5-L3A-DAY08-TenNhom-FromWorkflowsToAgents`
+- Lớp: L3B
+- Repo nhóm: `K5-L3B-DAY08-EA1117-FromWorkflowsToAgents`
 - Nhánh nộp: `main`
 - Commit chốt: cập nhật sau commit hồ sơ cuối
 
@@ -35,5 +35,6 @@
 - `report/team/2A202603848_ChuVanNhat.md`: Shape D và evaluation.
 - `report/team/2A202603894_NguyenMinhPhuc.md`: Shape C.
 - `report/team/2A202603896_PhamQuangDung.md`: handoff boundary, security tests và báo cáo.
+
 
 
